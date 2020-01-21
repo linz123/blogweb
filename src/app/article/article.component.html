@@ -1,0 +1,105 @@
+<div class="article-wrapper">
+  <div class="article">
+
+    <div class="layout-left">
+      <div class="article-header">
+        <div class="label">
+          <div class="item">{{articleData.label_parent_name}}</div>
+          <div class="item">{{articleData.label_name}}</div>
+        </div>
+        <div class="article-title">
+          <h3>{{articleData.article_title}}</h3>
+        </div>
+        <div class="article-detail">
+          <p>作者：<span class="username">{{articleData.username}}</span><span> · </span>
+            Updated <span class="time"> {{articleData.article_date.time | date}}</span>
+            <span>浏览量：{{articleData.article_views}}</span>
+          </p>
+        </div>
+        <mat-divider></mat-divider>
+      </div>
+
+      <div class="article-body" id="article">
+
+      </div>
+
+      <!--             [class.commend]="isCommend"-->
+      <!--             (click)="commend(article.article_id)"-->
+      <div class="article-footer">
+
+        <div matTooltip="点赞"
+
+             matTooltipPosition="above">
+          <i class="material-icons">favorite_border</i><span>{{articleData.article_like_count}}</span>
+        </div>
+
+        <div matTooltip="评论" matTooltipPosition="above">
+          <i class="material-icons">comment</i><span>{{articleData.article_comment_count}}</span>
+        </div>
+
+      </div>
+
+      <div class="article-comment">
+        <div class="img">
+          <img src="https://qph.fs.quoracdn.net/main-thumb-827962555-100-fnljlqocfeqwdqlsizppwahbsjdnsjfw.jpeg" alt="">
+        </div>
+        <div class="comment">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="添加评论">
+          </mat-form-field>
+        </div>
+        <button class="all" mat-button>发表评论</button>
+      </div>
+
+    </div>
+
+    <div class="layout-right">
+      <div class="author common">
+        <div class="about-author">关于作者</div>
+
+        <div class="profile">
+          <img src="https://qph.fs.quoracdn.net/main-thumb-827962555-100-fnljlqocfeqwdqlsizppwahbsjdnsjfw.jpeg" alt="">
+        </div>
+        <ul class="user-detail">
+          <li class="username">Linz</li>
+          <li class="email"><i class="material-icons" style="font-size: 12px;height: 13px">
+            mail_outline
+          </i> <span>: linz2019.tianxia@gmail.com</span>
+          </li>
+          <li class="description">
+            Curious, inspirational and humorous donations welcome.
+          </li>
+        </ul>
+        <div class="user-statistics">
+          <div matTooltip="发表文章数" matTooltipPosition="above">
+            <i class="material-icons">insert_drive_file</i>
+            <div class="count">20</div>
+          </div>
+          <div matTooltip="点赞数" matTooltipPosition="above">
+            <i class="material-icons"> thumb_up_alt </i>
+            <div class="count">86</div>
+          </div>
+          <div matTooltip="浏览数" matTooltipPosition="above">
+            <i class="material-icons"> pets </i>
+            <div class="count">200</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="article-hot common">
+        <div class="hot-title">最热文章</div>
+        <ul class="content-list">
+
+          <li *ngFor="let list of hotArticleList">
+            <a target="_blank" [routerLink]="['/article',list.article_id]">{{list.article_title}}</a>
+          </li>
+
+        </ul>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,87 @@
+<div class="content">
+
+  <div class="content-left">
+    <div class="article-list">
+      <div class="article-detail" *ngFor="let article of articleList, let i=index">
+
+        <div class="label">{{article.label_parent_name}}<span> · </span>
+          {{article.label_name}}
+        </div>
+        <h5 class="article-title">
+          <a target="_blank" [routerLink]="['/article',article.article_id]"> {{article.article_title}}</a>
+
+        </h5>
+
+        <div class="user-detail">
+          <span>作者</span><span> · </span>
+          <span class="username">{{article.username}}</span><span> · </span>
+          <span class="time">Updated {{article.article_date.time | date }}</span>
+        </div>
+        <div class="article-footer">
+
+          <div matTooltip="浏览数" matTooltipPosition="above">
+            <i class="material-icons">pets</i><span>{{article.article_views}}</span>
+          </div>
+
+          <div matTooltip="点赞"
+               [class.commend]="article.isCommend"
+               (click)="commend(article.article_id,i)"
+               matTooltipPosition="above">
+            <i class="material-icons">favorite_border</i><span>{{article.article_like_count}}</span>
+          </div>
+
+          <div matTooltip="评论" matTooltipPosition="above">
+            <i class="material-icons">comment</i><span>{{article.article_comment_count}}</span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="paginator">
+      <mat-paginator [length]="listLength"
+                     [pageSize]="pageSize"
+                     [pageSizeOptions]="pageSizeOptions"
+                     (page)="reloadPage(pageEvent = $event)">
+      </mat-paginator>
+    </div>
+
+
+  </div>
+  <div class="content-right">
+    <div class="about-me">
+      <div class="about-title">
+        关于我
+      </div>
+      <ul class="about-content">
+        <li>The role of technology in our daily lives and its impact</li>
+        <li>How to fine-tune your tech habits to achieve personal digital
+          wellbeing goals, like getting more sleep
+        </li>
+        <li>From FOMO to JOMO: having an intentional relationship with technology</li>
+        <li>Kids and tech: how to serve up healthy tech habits at your dinner table
+          and other ways to establish healthy boundaries for your family
+        </li>
+        <li>How to design digital products with user wellbeing in mind</li>
+        <li>Inspiration for getting into this field</li>
+      </ul>
+    </div>
+
+    <div class="article-hot common">
+      <div class="hot-title">最热文章</div>
+      <ul class="content-list">
+        <li *ngFor="let list of hotArticleList">
+          <a target="_blank" [routerLink]="['/article',list.article_id]">{{list.article_title}}</a>
+        </li>
+      </ul>
+
+    </div>
+
+
+  </div>
+
+
+</div>
+

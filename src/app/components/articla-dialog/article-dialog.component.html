@@ -1,0 +1,69 @@
+<div class="wrapper">
+
+  <h3 mat-dialog-title class="article-dialog-title"> 发布文章 </h3>
+
+  <div mat-dialog-content class="article-dialog-content">
+    <!--    <div class="items">-->
+    <!--      <span class="label"> 文章标签：</span>-->
+    <!--      <i style="font-size: 16px;" class="material-icons items-content">-->
+    <!--        note_add-->
+    <!--      </i> <span class="items-content">添加标签</span>-->
+    <!--    </div>-->
+    <div class="items">
+      <span class="label"> 文章标签：</span>
+
+
+      <mat-form-field class="label-chip-list">
+        <mat-chip-list #chipList aria-label="Fruit selection">
+          <mat-chip
+            *ngFor="let label of labels"
+            [selectable]="selectable"
+            [removable]="removable"
+            (removed)="remove(label)">
+            {{label}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input
+            placeholder="新标签..."
+            [formControl]="labelCtrl"
+            [matAutocomplete]="auto"
+            [matChipInputFor]="chipList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            [matChipInputAddOnBlur]="addOnBlur"
+            (matChipInputTokenEnd)="add($event)">
+        </mat-chip-list>
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+          <mat-option *ngFor="let label of filteredLabels | async" [value]="label">
+            {{label}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+
+    </div>
+
+
+    <div class="items">
+      <span class="label"> 文章题目：</span>
+      <mat-form-field class="title-full-width">
+        <input matInput placeholder="文章题目">
+      </mat-form-field>
+    </div>
+
+    <div class="items">
+      <span class="label"> 发布形式：</span>
+      <section class="publish-section">
+        <mat-checkbox class="publish-section-margin">公开</mat-checkbox>
+        <mat-checkbox class="publish-section-margin">私密</mat-checkbox>
+        <mat-checkbox class="publish-section-margin">粉丝可见</mat-checkbox>
+        <mat-checkbox class="publish-section-margin">vip可见</mat-checkbox>
+      </section>
+    </div>
+  </div>
+
+  <div mat-dialog-actions class="article-dialog-action">
+    <button mat-button>取消</button>
+    <button mat-stroked-button color="accent">发布文章</button>
+  </div>
+
+</div>

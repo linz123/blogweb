@@ -1,0 +1,39 @@
+<div class="tool-bar">
+
+  <div class="article-title">
+
+    <mat-form-field class="article-title-container">
+      <input
+        [formControl]="formControl"
+        maxlength="40" #articleTitle matInput placeholder="输入文章标题" [(ngModel)]="title">
+      <mat-hint align="end">{{articleTitle.value.length}} / 40</mat-hint>
+      <mat-error *ngIf="formControl.hasError('required')">
+        请填写文章标题哦
+      </mat-error>
+    </mat-form-field>
+
+  </div>
+
+
+  <div class="operate">
+
+    <button (click)="saveDraft()" mat-stroked-button color="primary"
+            class="publish-article">保存草稿
+    </button>
+
+    <button (click)="getContent()" mat-raised-button color="primary"
+            class="publish-article">发布文章
+    </button>
+
+
+  </div>
+
+</div>
+
+<md-editor name="Content"
+           [(ngModel)]="content"
+           [height]="'750px'"
+           required
+           maxlength="500">
+</md-editor>
+

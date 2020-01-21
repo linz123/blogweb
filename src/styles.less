@@ -1,0 +1,51 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body {
+  height: 100%;
+}
+
+html {
+  font-size: 15px;
+  line-height: 1.4;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  text-rendering: optimizeLegibility;
+  color: #333;
+  //background-color: #f4f5f5;
+}
+
+body {
+  background: #fafafa !important;
+}
+
+/*公共样式--开始*/
+html, body, div, ul, li, h1, h2, h3, h4, h5, h6, p, dl, dt, dd, ol, form, input, textarea, th, td, select {
+  margin: 0;
+  padding: 0;
+}
+
+ul, ol {
+  list-style: none;
+
+}
+
+a {
+  color: #3399FF;
+  font-weight: Normal; /*CSS字体效果 普通 可以改成bold粗体 如果去除此行那么默认是不显示下划线的*/
+  text-decoration: none; /*CSS下划线效果：无下划线*/
+}
+
+a:hover {
+  color: #4499EE;
+  text-decoration: none; /*CSS下划线效果：无下划线*/
+  //border-bottom: 1px #0099CC dotted /*CSS加一个只有下边的框 边框为虚线*/
+}
+
+//重置 boostraps
+
+label {
+  margin-bottom: 0;
+}
+
+button:focus {
+  outline: none;
+}
