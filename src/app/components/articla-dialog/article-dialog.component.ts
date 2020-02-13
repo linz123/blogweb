@@ -1,96 +1,130 @@
 import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {FormControl} from "@angular/forms";
 import {MatAutocomplete, MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {MatChipInputEvent} from "@angular/material/chips";
 import {map, startWith} from "rxjs/operators";
 import {Observable} from "rxjs";
+import {CommonService} from "../../service/common.service";
+import {Router} from "@angular/router";
 
 @Component({
-  selector: 'app-articla-dialog',
+  selector: 'app-article-dialog',
   templateUrl: './article-dialog.component.html',
   styleUrls: ['./article-dialog.component.less']
 })
 export class ArticleDialogComponent implements OnInit {
 
 
-  selectable = true;
+  allLabels: string[];  // 所有类型标签
 
-  removable = true;
+  selectedLabel: string[] = []; // 选中的标签
 
-  addOnBlur = true;
+  publishType = "1";  // 发布文章类型
 
-  labels: string[] = ['JavaScript'];
+  sketch: string = '';
 
-  separatorKeysCodes: number[] = [ENTER, COMMA];
-
-  filteredLabels: Observable<string[]>;
-
-  allLabels: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
 
-  @ViewChild('labelInput', {static: false}) labelInput: ElementRef<HTMLInputElement>;
-  @ViewChild('auto', {static: false}) matAutocomplete: MatAutocomplete;
+  constructor(@Inject(MAT_DIALOG_DATA) public data,
+              public dialogRef: MatDialogRef<ArticleDialogComponent>,
+              private service: CommonService,
+              private router: Router
+  ) {
 
-  labelCtrl = new FormControl('', {});
-
-  constructor(@Inject(MAT_DIALOG_DATA) public data) {
-
-
-    this.filteredLabels = this.labelCtrl.valueChanges.pipe(
-      startWith(null),
-      map((label: string | null) => label ? this._filter(label) : this.allLabels.slice()));
 
   }
 
 
-  remove(label: string): void {
-    const index = this.labels.indexOf(label);
+  // 关闭弹窗
+  public dialogClose(): void {
+    this.dialogRef.close();
+  }
 
+  // 获取所有的标签
+  showAllLabels(): void {
+    this.service.getAllLabels().subscribe(
+      resp => {
+        if (resp.status === 1000) {
+
+          let arr = [];
+          for (let i = 0; i < resp.data.length; i++) {
+            arr.push(resp.data[i].label_name);
+          }
+          this.allLabels = arr;
+          console.log(this.allLabels);
+        }
+      }
+    )
+  }
+
+  // 当前选中标签移除
+
+  remove(label): void {
+    console.log(this.selectedLabel);
+    console.log(label);
+    const index = this.selectedLabel.indexOf(label);
+    console.log(index);
     if (index >= 0) {
-      this.labels.splice(index, 1);
+      this.selectedLabel.splice(index, 1);
+
     }
-  }
-
-
-  selected(event: MatAutocompleteSelectedEvent): void {
-    this.labels.push(event.option.viewValue);
-    this.labelInput.nativeElement.value = '';
-    this.labelCtrl.setValue(null);
-  }
-
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.allLabels.filter(label => label.toLowerCase().indexOf(filterValue) === 0);
   }
 
   add(event: MatChipInputEvent): void {
-    // Add fruit only when MatAutocomplete is not open
-    // To make sure this does not conflict with OptionSelected Event
-    if (!this.matAutocomplete.isOpen) {
-      const input = event.input;
-      const value = event.value;
 
-      // Add our fruit
-      if ((value || '').trim()) {
-        console.log(this.labels)
-
-        this.labels.push(value.trim());
-      }
-
-      // Reset the input value
-      if (input) {
-        input.value = '';
-      }
-
-      this.labelCtrl.setValue(null);
+    if (this.selectedLabel.length >= 3) {
+      return;
     }
+
+    const input = event.input;
+    const value = event.value;
+    // Add our fruit
+    if ((value || '').trim()) {
+      this.selectedLabel.push(value);
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+
+  }
+
+  optionAdd(option: string) {
+    if (this.selectedLabel.length >= 3) {
+      return;
+    }
+    this.selectedLabel.push(option);
+  }
+
+
+  consoleType() {
+
+  }
+
+  publish() {
+    const {title, content} = this.data;
+    const labels = this.selectedLabel;
+
+    this.service.publishArticle('1', title, content, labels, this.sketch).subscribe(
+      resp => {
+        if (resp.status === 1000) {
+          alert(resp.message);
+          this.dialogClose();
+          this.router.navigateByUrl('/article/' + resp.data.article_id);
+        }
+      }
+    )
+
   }
 
 
   ngOnInit() {
+    this.showAllLabels();
   }
+
 
 }

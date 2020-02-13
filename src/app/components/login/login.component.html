@@ -1,0 +1,28 @@
+<form class="login-form" [formGroup]="loginFormControl" (ngSubmit)="onSubmit()">
+
+  <div class="title item-full-width">
+    登录
+  </div>
+
+  <mat-form-field class="item-full-width">
+    <mat-label>用户名</mat-label>
+    <input matInput placeholder="用户名.." formControlName="username">
+    <mat-error *ngIf="username.hasError('required')">
+      请填写用户名
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="item-full-width">
+    <mat-label>密码</mat-label>
+    <input matInput placeholder="密码" type="password" formControlName="password">
+    <mat-error *ngIf="username.hasError('required')">
+      请填写密码
+    </mat-error>
+  </mat-form-field>
+
+  <div class="item-login">
+    <button mat-flat-button color="primary" [disabled]="loginFormControl.invalid">登录</button>
+  </div>
+
+
+</form>

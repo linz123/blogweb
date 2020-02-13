@@ -4,8 +4,8 @@
     <div class="layout-left">
       <div class="article-header">
         <div class="label">
-          <div class="item">{{articleData.label_parent_name}}</div>
-          <div class="item">{{articleData.label_name}}</div>
+          <div class="item" *ngFor="let label of articleData.labels">{{label}}</div>
+
         </div>
         <div class="article-title">
           <h3>{{articleData.article_title}}</h3>
@@ -27,8 +27,8 @@
       <!--             (click)="commend(article.article_id)"-->
       <div class="article-footer">
 
-        <div matTooltip="点赞"
-
+        <div [class.commend]="isCommend"
+             (click)="commend(articleData.article_id)" matTooltip="点赞"
              matTooltipPosition="above">
           <i class="material-icons">favorite_border</i><span>{{articleData.article_like_count}}</span>
         </div>
@@ -61,27 +61,27 @@
           <img src="https://qph.fs.quoracdn.net/main-thumb-827962555-100-fnljlqocfeqwdqlsizppwahbsjdnsjfw.jpeg" alt="">
         </div>
         <ul class="user-detail">
-          <li class="username">Linz</li>
+          <li class="username">{{authorInfo.username}}</li>
           <li class="email"><i class="material-icons" style="font-size: 12px;height: 13px">
             mail_outline
-          </i> <span>: linz2019.tianxia@gmail.com</span>
+          </i> <span>: {{authorInfo.email}}</span>
           </li>
           <li class="description">
-            Curious, inspirational and humorous donations welcome.
+            {{authorInfo.describe}}
           </li>
         </ul>
         <div class="user-statistics">
           <div matTooltip="发表文章数" matTooltipPosition="above">
             <i class="material-icons">insert_drive_file</i>
-            <div class="count">20</div>
+            <div class="count">{{authorInfo.total}}</div>
           </div>
           <div matTooltip="点赞数" matTooltipPosition="above">
             <i class="material-icons"> thumb_up_alt </i>
-            <div class="count">86</div>
+            <div class="count">{{authorInfo.article_like_counts}}</div>
           </div>
           <div matTooltip="浏览数" matTooltipPosition="above">
             <i class="material-icons"> pets </i>
-            <div class="count">200</div>
+            <div class="count">{{authorInfo.article_views}}</div>
           </div>
         </div>
 

@@ -18,16 +18,25 @@
         <mat-icon matSuffix>mode_edit</mat-icon>
       </mat-form-field>
     </div>
-    <div class="write">
+    <div class="login-after" *ngIf="service.isLogin">
       <mat-icon matSuffix>book</mat-icon>
       <button mat-button color="primary">
         <a routerLink="/md" style="color: #3f51b5;text-decoration: none;" target="_blank">写文章</a>
       </button>
       |
-      <button mat-button color="primary">登录</button>
+      <button mat-button color="primary" (click)="loginOut()">退出</button>
       <!--      .-->
       <!--      <button mat-button>注册</button>-->
     </div>
+    <div class="login-before" *ngIf="!service.isLogin">
+      <mat-icon matSuffix>account_box</mat-icon>
+      <!--      <button mat-button color="primary">-->
+      <!--        <a routerLink="/md" style="color: #3f51b5;text-decoration: none;" target="_blank">写文章</a>-->
+      <!--      </button>-->
+      <!--      |-->
+      <button mat-button color="primary" (click)="login()">登录</button>
+    </div>
+
   </div>
 
 

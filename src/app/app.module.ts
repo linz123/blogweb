@@ -31,6 +31,10 @@ import {ArticleDialogComponent} from './components/articla-dialog/article-dialog
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatOptionModule} from "@angular/material/core";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {MatRadioModule} from "@angular/material/radio";
+import {MatSelectModule} from "@angular/material/select";
+import {LoginComponent} from "./components/login/login.component";
+
 
 @NgModule({
   declarations: [
@@ -39,7 +43,8 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
     NavComponent,
     MarkdownComponent,
     ArticleComponent,
-    ArticleDialogComponent
+    ArticleDialogComponent,
+    LoginComponent
 
   ],
   imports: [
@@ -65,10 +70,13 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
     MatCheckboxModule,
     ReactiveFormsModule,
     MatOptionModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatRadioModule,
+    MatSelectModule
   ],
   entryComponents: [
-    ArticleDialogComponent
+    ArticleDialogComponent,
+    LoginComponent
   ],
   providers: [CommonService, Request],
   bootstrap: [AppComponent]

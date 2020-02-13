@@ -11,7 +11,7 @@ export class Request {
 
   }
 
-  private address: string = 'http://localhost:3000/';
+  private address: string = '/api/';
 
 
   private header = new Headers({

@@ -1,5 +1,4 @@
 
-
 .content {
   width: 1050px;
   min-height: 600px;
@@ -28,6 +27,21 @@
           color: #949494;
           font-size: 13px !important;
           margin-bottom: 5px;
+          min-height: 25px;
+          display: flex;
+
+          .item {
+            margin-right: 4px;
+            font-size: 13px;
+            margin-bottom: 8px;
+            user-select: none;
+            padding: 4px 6px;
+            background: #f7f7f7;
+            border-radius: 4px;
+            cursor: pointer;
+            color: #666;
+          }
+
         }
 
         .article-title {
@@ -175,6 +189,7 @@
 
       .content-list {
         padding: 15px 15px;
+
         li {
           margin-bottom: 16px;
           margin-top: 8px;
@@ -183,7 +198,8 @@
             color: #2b6dad;
             cursor: pointer;
             font-size: 14px;
-            &:hover{
+
+            &:hover {
               text-decoration: underline;
             }
 

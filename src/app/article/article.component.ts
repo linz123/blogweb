@@ -20,6 +20,10 @@ export class ArticleComponent implements OnInit {
 
   public hotArticleList: any;
 
+  public authorInfo: any;
+
+  public isCommend: boolean;
+
   ngOnInit() {
 
     this.route.paramMap.subscribe(param => {
@@ -29,6 +33,8 @@ export class ArticleComponent implements OnInit {
           if (resp.status === 1000) {
 
             this.articleData = resp.data[0];
+            this.isCommend = this.articleData.isCommend;
+            this.showAuthorInfo(this.articleData.user_id);
 
             document.getElementById('article').innerHTML
               = marked(this.articleData.article_content);
@@ -51,9 +57,38 @@ export class ArticleComponent implements OnInit {
       resp => {
         if (resp.status === 1000) {
           this.hotArticleList = resp.data;
+
         }
       }
     )
+  }
+
+
+  showAuthorInfo(uid: number) {
+    this.service.getAuthorInfo(uid).subscribe(
+      resp => {
+        if (resp.status === 1000) {
+          this.authorInfo = resp.data[0];
+
+
+        }
+      }
+    )
+  }
+
+  commend(article_id: number) {
+    if (!this.isCommend) {
+      this.service.commend(article_id).subscribe(
+        resp => {
+          if (resp.status === 1000) {
+            this.isCommend = true;
+            this.articleData.article_like_count += 1;
+          }
+        }
+      )
+    } else {
+      alert('您已经点过赞了');
+    }
   }
 
 

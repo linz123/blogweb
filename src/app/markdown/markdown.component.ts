@@ -20,9 +20,7 @@ export class MarkdownComponent implements OnInit {
 
   constructor(private service: CommonService,
               public dialog: MatDialog
-  ) {
-
-  }
+  ) {}
 
 
   formControl = new FormControl('', [
@@ -33,35 +31,26 @@ export class MarkdownComponent implements OnInit {
   getContent(): void {
 
     console.log(this.formControl.valid);
+    console.log(this.content);
 
-    if (this.formControl.valid || this.content === '') {
+    if (this.formControl.valid && this.content) {
 
       // 弹窗
-      // this.dialog.open(ArticleDialogComponent, {});
+      this.dialog.open(ArticleDialogComponent, {
+        data: {
+          title: this.title,
+          content: this.content
+        }
+      });
 
-      this.service.publishArticle("1", this.title, this.content)
-
-        .subscribe(resp => {
-
-          if (resp.status === 1) {
-            alert("发布成功");
-          } else {
-            alert(resp.msg);
-          }
-
-        }, error => console.log(error.toString()))
-
-
-      return;
     } else {
       alert("文章内容或标题不能为空哦");
     }
 
-
   }
 
+  saveDraft(){
 
-  saveDraft() {
   }
 
 

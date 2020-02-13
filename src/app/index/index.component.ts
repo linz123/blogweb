@@ -34,12 +34,7 @@ export class IndexComponent implements OnInit {
         console.log(this.pageSizeOptions);
         if (resp.status === 1000) {
           this.listLength = resp.data.total;
-          this.articleList = resp.data.result.map(item => {
-            return Object.assign(item, {
-              isCommend: false
-            })
-          });
-          console.log(this.articleList);
+          this.articleList = resp.data.result;
         }
       }, error => console.log(error.toString()))
   }
@@ -81,6 +76,10 @@ export class IndexComponent implements OnInit {
     )
   }
 
+  consoleType(){
+
+  }
+
 
 
 
@@ -91,3 +90,4 @@ export class IndexComponent implements OnInit {
   }
 
 }
+
