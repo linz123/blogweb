@@ -152,7 +152,7 @@
 
         .comment {
           width: 400px;
-          height: 22px;
+          //height: 22px;
           padding: 4px 16px;
           font-size: 13px;
           //background: #ffffff;
@@ -167,10 +167,144 @@
         }
 
         .all {
-          color: #949494;
+          //color: #949494;
           font-size: 13px;
         }
 
+      }
+
+      .comments {
+        margin-top: 0;
+        border: 1px solid #efefef;
+        background-color: #fff;
+        border-radius: 4px;
+        border-bottom: 1px solid #e2e2e2;
+        margin-bottom: 8px;
+        padding: 16px;
+        -webkit-transition: border-color 0.5s ease;
+        transition: border-color 0.5s ease;
+        //height: 200px;
+
+        .comment {
+          border-top: 1px solid #e5e9ef;
+          //display: flex;
+          padding: 10px 0;
+
+          .parent-comment {
+            display: flex;
+          }
+
+          .child-comment {
+            .child-item {
+              display: flex;
+              margin-left: 50px;
+              border-left:2px solid #e6e6e6;
+
+
+              .avatar {
+                width: 60px;
+
+                img {
+                  height: 30px;
+                  width: 30px;
+                }
+              }
+
+              .content {
+                .text {
+                  width: 480px;
+                }
+
+              }
+
+              .comment-info{
+                span{
+                  margin-left: 10px;
+                  padding: 5px;
+                  font-size: 12px;
+
+                  &:hover {
+                    background: rgba(230, 230, 230, .5);
+                    border-radius: 25%;
+                  }
+                }
+              }
+
+            }
+          }
+
+
+          .avatar {
+            margin-top: 20px;
+            width: 60px;
+            text-align: center;
+
+            img {
+              height: 35px;
+              width: 35px;
+              border-radius: 50%;
+            }
+
+          }
+
+          .content {
+            //margin-left: 70px;
+            margin-top: 17px;
+
+            .username {
+              font-weight: bold;
+              color: #222;
+              font-size: 16px;
+              line-height: 18px;
+              padding-bottom: 4px;
+            }
+
+            .text {
+              width: 550px;
+              font-size: 13px;
+              font-weight: 400;
+              color: #000000;
+              text-align: justify;
+              //padding-right: 10px;
+              //margin-bottom: 10px;
+
+            }
+
+            .comment-info {
+              display: flex;
+              align-items: center;
+              justify-content: flex-end;
+              //padding-right: 10px;
+              cursor: pointer;
+
+              span {
+                color: #949494;
+                font-size: 13px;
+              }
+
+              .time {
+                //margin-right: 15px;
+              }
+
+              .reply {
+                padding: 5px;
+                font-size: 12px;
+                margin-left: 10px;
+
+                &:hover {
+                  background: rgba(230, 230, 230, .5);
+                  border-radius: 25%;
+                }
+
+              }
+
+            }
+
+
+          }
+
+
+        }
       }
 
     }
@@ -189,7 +323,7 @@
 
       .author {
 
-        .about-author{
+        .about-author {
           padding: 12px 16px;
           border-width: 1px;
           border-color: #e2e2e2;
@@ -199,6 +333,7 @@
           font-weight: 500;
           font-size: 15px;
         }
+
         .profile {
           width: 50px;
           height: 50px;
@@ -212,6 +347,7 @@
 
         .user-detail {
           padding: 0 15px;
+
           li {
             text-align: center;
             margin-bottom: 5px;
@@ -273,6 +409,7 @@
 
         .content-list {
           padding: 15px 15px;
+
           li {
             margin-bottom: 16px;
             margin-top: 8px;
@@ -281,7 +418,8 @@
               color: #2b6dad;
               cursor: pointer;
               font-size: 14px;
-              &:hover{
+
+              &:hover {
                 text-decoration: underline;
               }
 

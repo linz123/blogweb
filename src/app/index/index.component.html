@@ -8,7 +8,7 @@
           <div class="item" *ngFor="let label of article.labels">{{label}}</div>
         </div>
         <h5 class="article-title">
-          <a target="_blank" [routerLink]="['/article',article.article_id]"> {{article.article_title}}</a>
+          <a [routerLink]="['/article',article.article_id]"> {{article.article_title}}</a>
 
         </h5>
 

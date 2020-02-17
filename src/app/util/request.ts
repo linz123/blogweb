@@ -11,7 +11,13 @@ export class Request {
 
   }
 
-  private address: string = '/api/';
+  get address(): string {
+    let hostname = window.location.hostname;
+    return hostname === 'localhost' ? 'http://localhost:3000/api/' : '/api/';
+  }
+
+
+  // private address: string = 'http://localhost:3000/api/';
 
 
   private header = new Headers({

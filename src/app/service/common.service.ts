@@ -101,5 +101,36 @@ export class CommonService {
     return this.request.post('loginOut');
   }
 
+  /**
+   * 获取评论列表
+   * @param article_id
+   */
+  getComments(article_id: number) {
+    return this.request.post('getComments', {article_id});
+  }
+
+
+  /**
+   * 添加评论
+   * @param uid
+   * @param article_id
+   * @param c_content
+   */
+  addComments(uid: number, article_id: number, c_content: string) {
+    return this.request.post('addComment', {
+      uid, article_id, c_content
+    });
+  }
+
+  /**
+   * 获取回复列表
+   * @param comment_id
+   */
+  getReplyList(comment_id: number) {
+    return this.request.post('getAllReplay', {
+      comment_id
+    })
+  }
+
 
 }
