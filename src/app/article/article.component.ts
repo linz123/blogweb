@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import marked from 'marked';
-import {CommonService} from "../service/common.service";
-import {ActivatedRoute} from "@angular/router";
-import {validate} from "codelyzer/walkerFactory/walkerFn";
+import {CommonService} from '../service/common.service';
+import {ActivatedRoute} from '@angular/router';
+import {validate} from 'codelyzer/walkerFactory/walkerFn';
 
 
 @Component({
@@ -27,17 +27,25 @@ export class ArticleComponent implements OnInit {
 
   public commentList: any;
 
+  // tslint:disable-next-line:variable-name
   private article_id: number; // 文章id
 
-  public comment_content: string = '';  // 评论内容
+  // tslint:disable-next-line:variable-name
+  public comment_content = '';  // 评论内容
 
   public replyContent = '';
 
 
+  // 评论选中值
+  public selectValue: number;
+
+  public childValue: number;
+
   ngOnInit() {
 
     this.route.paramMap.subscribe(param => {
-      let article_id = parseInt(param.get("id"));
+      // tslint:disable-next-line:radix variable-name
+      const article_id = parseInt(param.get('id'));
       this.article_id = article_id;
       this.getCommentList(article_id);
       this.service.getArticleById(article_id).subscribe(
@@ -51,9 +59,9 @@ export class ArticleComponent implements OnInit {
               = marked(this.articleData.article_content);
           }
         }, error => {
-          console.log(error.toString())
+          console.log(error.toString());
         }
-      )
+      );
     });
 
     this.showHotList();
@@ -68,10 +76,9 @@ export class ArticleComponent implements OnInit {
       resp => {
         if (resp.status === 1000) {
           this.hotArticleList = resp.data;
-
         }
       }
-    )
+    );
   }
 
 
@@ -80,11 +87,9 @@ export class ArticleComponent implements OnInit {
       resp => {
         if (resp.status === 1000) {
           this.authorInfo = resp.data[0];
-
-
         }
       }
-    )
+    );
   }
 
   commend(article_id: number) {
@@ -96,7 +101,7 @@ export class ArticleComponent implements OnInit {
             this.articleData.article_like_count += 1;
           }
         }
-      )
+      );
     } else {
       alert('您已经点过赞了');
     }
@@ -114,14 +119,14 @@ export class ArticleComponent implements OnInit {
             // 添加回复评论 boolean
             return Object.assign(item, {
               replyShow: false, // 是否展示评论
-              replayList: []      // 回复列表数据
+              replayList: []    // 回复列表数据
             });
 
           });
           console.log(this.commentList);
         }
       }
-    )
+    );
   }
 
   /**
@@ -130,7 +135,7 @@ export class ArticleComponent implements OnInit {
   addComment() {
     console.log(this.service.isLogin);
     if (!this.service.isLogin) {
-      alert("请先登录");
+      alert('请先登录');
       return;
     }
 
@@ -139,18 +144,22 @@ export class ArticleComponent implements OnInit {
     this.service.addComments(uid, this.article_id, this.comment_content).subscribe(
       resp => {
         if (resp.status === 1000) {
-          alert("添加成功");
+          alert('添加成功');
           this.comment_content = '';
           this.getCommentList(this.article_id);
         }
       }
-    )
+    );
 
   }
 
   // 显示回复栏
   showReply(index: number, commend_id: number) {
-    this.commentList[index].replyShow = !this.commentList[index].replyShow;
+
+    this.childValue = null;  // 清空子选中值
+    this.replyContent = '';
+
+    this.commentList[index].replyShow = true;
     if (this.commentList[index].replyShow) {
       this.service.getReplyList(commend_id).subscribe(
         resp => {
@@ -159,10 +168,28 @@ export class ArticleComponent implements OnInit {
             console.log(this.commentList[index]);
           }
         }
-      )
+      );
     }
 
 
+  }
+
+  /**
+   * 关闭评论
+   * @param index
+   */
+  openReplyInput(index: number) {
+    this.childValue = null;
+    this.selectValue = this.selectValue === index ? null : index;
+  }
+
+  /**
+   * 关闭字评论
+   * @param index toggle
+   */
+  ReplyCommentInput(index: number) {
+    this.selectValue = null;
+    this.childValue = this.childValue === index ? null : index;
   }
 
 
@@ -171,7 +198,48 @@ export class ArticleComponent implements OnInit {
     this.commentList[index].replyShow = false;
   }
 
-  addReply() {
+  addReply(comment_id: number, replyToUid: number, index: number) {
+    if (!this.service.isLogin) {
+      alert('请先登录');
+      return;
+    }
+    const uid = parseInt(this.service.isLogin);
+    this.service.addReply(uid, comment_id, this.replyContent, replyToUid)
+      .subscribe(resp => {
+        if (resp.status === 1000) {
+          alert('添加成功');
+          this.showReply(index, comment_id);
+          this.openReplyInput(index);
+
+
+        } else {
+          alert(resp.message);
+        }
+      });
+
 
   }
+
+
+  addChildReply(index: number, replyToUId: number, comment_id: number) {
+    if (!this.service.isLogin) {
+      alert('请先登录');
+      return;
+    }
+    const uid = parseInt(this.service.isLogin);
+    this.service.addReply(uid, comment_id, this.replyContent, replyToUId)
+      .subscribe(resp => {
+        if (resp.status === 1000) {
+          console.log(index);
+          this.showReply(index, comment_id);
+          this.openReplyInput(index);
+          alert('添加成功');
+        } else {
+          alert(resp.message);
+        }
+      });
+
+
+  }
+
 }

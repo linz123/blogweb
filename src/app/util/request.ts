@@ -13,7 +13,7 @@ export class Request {
 
   get address(): string {
     let hostname = window.location.hostname;
-    return hostname === 'localhost' ? 'http://localhost:3000/api/' : '/api/';
+    return hostname === 'localhost' ? 'http://149.28.134.10/api/' : '/api/';
   }
 
 

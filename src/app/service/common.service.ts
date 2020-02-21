@@ -1,7 +1,7 @@
-import {Injectable} from "@angular/core";
-import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
-import {Observable} from "rxjs";
-import {Request} from "../util/request";
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {Request} from '../util/request';
 
 @Injectable()
 export class CommonService {
@@ -16,7 +16,7 @@ export class CommonService {
    * 是否登录
    */
   get isLogin(): string {
-    return this.userId || localStorage.getItem("userId");
+    return this.userId || localStorage.getItem('userId');
   }
 
 
@@ -83,18 +83,18 @@ export class CommonService {
   getAuthorInfo(uid: number): Observable<any> {
     return this.request.post('aboutAuthor', {
       uid
-    })
+    });
   }
 
 
   getAllLabels(): Observable<any> {
-    return this.request.post('getAllLabels')
+    return this.request.post('getAllLabels');
   }
 
   login(username: string, password: string) {
     return this.request.post('login', {
       username, password
-    })
+    });
   }
 
   loginOUt(): Observable<any> {
@@ -127,10 +127,24 @@ export class CommonService {
    * @param comment_id
    */
   getReplyList(comment_id: number) {
-    return this.request.post('getAllReplay', {
+    return this.request.post('getAllReply', {
       comment_id
-    })
+    });
   }
 
+
+  /**
+   * 添加回复
+   * @param uid
+   * @param comment_id
+   * @param reply_content
+   * @param reply_to_uid
+   */
+  addReply(uid: number, comment_id: number, reply_content: string, reply_to_uid: number) {
+    return this.request.post('addReply', {
+      uid, comment_id, reply_content, reply_to_uid
+    });
+
+  }
 
 }

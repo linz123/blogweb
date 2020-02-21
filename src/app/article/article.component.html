@@ -79,48 +79,95 @@
               </p>
               <div class="comment-info">
                 <span class="time">Updated {{comment.generate_time.time | date}}</span>
-                <span class="reply">回复</span>
+                <span class="reply" (click)="openReplyInput(index)">回复</span>
                 <span class="reply show-reply" *ngIf="!!comment.reply_counts && !comment.replyShow"
                       (click)="showReply(index,comment.commend_id)">查看回复({{comment.reply_counts}})</span>
                 <span class="reply show-reply" (click)="closeReply(index)" *ngIf="comment.replyShow">收起</span>
               </div>
             </div>
 
-            <div class="reply">
-              <div class="input-reply">
-                <mat-form-field class="full-width">
-                  <mat-label>添加评论</mat-label>
-                  <textarea #replyContent [(ngModel)]="replyContent" maxlength="500" matInput
-                            placeholder="Ex. It makes me feel..."></textarea>
-                  <mat-hint align="end">{{replyContent.value.length}} / 500</mat-hint>
-                </mat-form-field>
-              </div>
+          </div>
 
-              <button class="all" (click)="addReply();" mat-flat-button color="primary"
-                      [disabled]="!!!replyContent.value.length">
-                发表评论
+          <div class="reply" *ngIf="index === selectValue">
+            <div class="img">
+              <img src="https://qph.fs.quoracdn.net/main-thumb-827962555-100-fnljlqocfeqwdqlsizppwahbsjdnsjfw.jpeg"
+                   alt="">
+            </div>
+
+            <div class="input-reply">
+              <mat-form-field class="full-width">
+                <mat-label>添加回复</mat-label>
+                <textarea #reply [(ngModel)]="replyContent" maxlength="500" matInput
+                          placeholder="Ex. It makes me feel..."></textarea>
+                <mat-hint align="end">{{reply.value.length}} / 500</mat-hint>
+              </mat-form-field>
+            </div>
+            <div class="button">
+              <button style="width: 100px;" (click)="addReply(comment.commend_id,comment.uid,index);" mat-stroked-button
+                      color="primary"
+                      [disabled]="!!!reply.value.length">
+                回复
               </button>
             </div>
+
           </div>
 
           <div class="child-comment" *ngIf="comment.replyShow">
 
-            <div class="child-item" *ngFor="let reply of comment.replayList">
+            <div class="child-item" *ngFor="let reply of comment.replayList,let i = index;">
               <div class="avatar">
                 <img src="https://qph.fs.quoracdn.net/main-thumb-827962555-100-fnljlqocfeqwdqlsizppwahbsjdnsjfw.jpeg"
                      alt="">
               </div>
               <div class="content">
-                <p class="username">{{reply.username}} <span> 回复 </span>{{reply.replyToName}}</p>
-                <p class="text">
-                  {{reply.reply_content}}
-                </p>
-                <div class="comment-info">
-                  <span class="time">{{reply.generate_time.time | date}}</span>
-                  <span class="replay">回复</span>
+
+                <div>
+                  <p class="username">{{reply.username}} <span> 回复 </span>{{reply.replyToName}}</p>
+                  <p class="text">
+                    {{reply.reply_content}}
+                  </p>
+                  <div class="comment-info">
+                    <span class="time">{{reply.generate_time.time | date}}</span>
+                    <span class="replay" (click)="ReplyCommentInput(i)">回复</span>
+                  </div>
+
+                  <!--                  <div class="reply" *ngIf="index === selectValue">-->
+                  <!--                    <div class="img">-->
+                  <!--                      <img-->
+                  <!--                        src="https://qph.fs.quoracdn.net/main-thumb-827962555-100-fnljlqocfeqwdqlsizppwahbsjdnsjfw.jpeg"-->
+                  <!--                        alt="">-->
+                  <!--                    </div>-->
+                  <!--                  </div>-->
+
+                  <!--                       子评论回复-->
+
+
+                  <div class="reply" *ngIf="i === childValue">
+
+                    <div class="input-reply" style="width: 350px;">
+                      <mat-form-field class="full-width">
+                        <mat-label>添加回复</mat-label>
+                        <textarea #texts [(ngModel)]="replyContent" maxlength="500" matInput
+                                  placeholder="Ex. It makes me feel..."></textarea>
+                        <mat-hint align="end">{{texts.value.length}} / 500</mat-hint>
+                      </mat-form-field>
+                    </div>
+                    <div class="button">
+                      <button style="width: 100px;"
+                              (click)="addChildReply(index,reply.uid,reply.comment_id);" mat-stroked-button
+                              color="primary"
+                              [disabled]="!!!texts.value.length">
+                        回复
+                      </button>
+                    </div>
+
+                  </div>
+
                 </div>
+
               </div>
             </div>
+
           </div>
 
 
